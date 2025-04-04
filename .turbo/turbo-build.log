@@ -1,0 +1,14 @@
+
+
+> @airstate/user-shared-state@0.0.1 build /mono/packages/use-shared-state
+> tsc --project tsconfig.build.json
+
+[96msrc/index.mts[0m:[93m1[0m:[93m20[0m - [91merror[0m[90m TS2307: [0mCannot find module 'yjs' or its corresponding type declarations.
+
+[7m1[0m import * as Y from 'yjs';
+[7m [0m [91m                   ~~~~~[0m
+
+
+Found 1 error in src/index.mts[90m:1[0m
+
+[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 2.[39m
