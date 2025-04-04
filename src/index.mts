@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import * as Y from 'yjs';
 import { syncToY } from './sync-to-yjs/index.mjs';
+import { version } from './version.mjs';
 
 export type TOptions = {
     key?: string;
@@ -62,16 +63,17 @@ export function useSharedState<T extends JSONAble>(
         const host = window.location.host;
         const key = options?.key ?? window.location.pathname;
 
-        const searchParams = new URL(configuration.server ? configuration.server : `wss://socket.airstate.dev/y/main`);
+        const connectionURL = new URL(configuration.server ? configuration.server : `wss://socket.airstate.dev/y/main`);
 
-        searchParams.searchParams.append('host', host);
-        searchParams.searchParams.append('key', key);
+        connectionURL.searchParams.append('host', host);
+        connectionURL.searchParams.append('key', key);
+        connectionURL.searchParams.append('version', version);
 
         if (configuration?.appKey) {
-            searchParams.searchParams.append('app-id', configuration.appKey);
+            connectionURL.searchParams.append('app-key', configuration.appKey);
         }
 
-        const ws = new WebSocket(`wss://socket.airstate.dev/y/main?${searchParams}`);
+        const ws = new WebSocket(`${connectionURL}`);
 
         const freshDoc = new Y.Doc();
         const freshDocMain = freshDoc.getMap('main');
@@ -145,6 +147,18 @@ export function useSharedState<T extends JSONAble>(
                 publicStateRef.current = doc.getMap('main').toJSON().data;
 
                 forceUpdate();
+            } else if (m.type === 'error') {
+                throw new Error(m.message);
+            } else if (m.type === 'console') {
+                if (m.level === 'debug') {
+                    console.debug(...m.logs);
+                } else if (m.level === 'info') {
+                    console.info(...m.logs);
+                } else if (m.level === 'warn') {
+                    console.warn(...m.logs);
+                } else if (m.level === 'error') {
+                    console.error(...m.logs);
+                }
             }
         };
     }, []);
