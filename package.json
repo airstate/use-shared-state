@@ -8,6 +8,7 @@
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
         "build:watch": "tsc --project tsconfig.build.json --watch --preserveWatchOutput",
+        "dev": "pnpm build:watch",
         "test": "jest"
     },
     "dependencies": {

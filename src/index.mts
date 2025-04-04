@@ -20,7 +20,7 @@ export type JSONAble =
 export type TConfigurationOptions = {
     appKey: string;
     server: string;
-    telemetry: boolean;
+    disableDevelopmentTelemetry: boolean;
 };
 
 export const configuration: Partial<TConfigurationOptions> = {};
