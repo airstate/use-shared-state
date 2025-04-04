@@ -1,6 +1,6 @@
 {
     "name": "@airstate/use-shared-state",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "[BETA] useState but instantly syncs across clients in realtime",
     "main": "dist/index.mjs",
     "types": "dist/index.d.mts",
