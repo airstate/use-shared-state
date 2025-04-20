@@ -13,6 +13,7 @@ export type TSupported =
 export type TCommonOptions = {
     doc: Y.Doc;
     mergeObjects?: boolean;
+    noTruncateArrays?: boolean;
 };
 
 export function syncToY<T extends {}>(options: TCommonOptions & { value: T; to?: Y.Map<any> }): Y.Map<any>;
@@ -78,7 +79,7 @@ export function syncToY<T extends TSupported>(
                     }
                 }
 
-                if (to.length > value.length) {
+                if (to.length > value.length && !options.noTruncateArrays) {
                     // truncate
                     to.delete(value.length, to.length - value.length);
                 } else {

@@ -130,6 +130,7 @@ export function useSharedState<T extends JSONAble>(
                     value: { data: initialComputedState },
                     to: doc.getMap('main'),
                     mergeObjects: true,
+                    noTruncateArrays: true,
                 });
 
                 publicStateRef.current = doc.getMap('main').toJSON().data;
